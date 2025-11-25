@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/GenericalAPI.Api/GenericalAPI.Api.csproj" />
+  <Project Path="src/GenericalAPI.Application/GenericalAPI.Application.csproj" />
+  <Project Path="src/GenericalAPI.Domain/GenericalAPI.Domain.csproj" />
+  <Project Path="src/GenericalAPI.Infrastructure/GenericalAPI.Infrastructure.csproj" />
+  <Project Path="src/GenericalAPI.Shared/GenericalAPI.Shared.csproj" />
+  <Project Path="tests/GenericalAPI.Tests.Unit/GenericalAPI.Tests.Unit.csproj" />
+</Solution>
