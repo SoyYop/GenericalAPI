@@ -14,4 +14,11 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.11.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GenericalAPI.Application\GenericalAPI.Application.csproj" />
+    <ProjectReference Include="..\GenericalAPI.Domain\GenericalAPI.Domain.csproj" />
+    <ProjectReference Include="..\GenericalAPI.Infrastructure\GenericalAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\GenericalAPI.Shared\GenericalAPI.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
