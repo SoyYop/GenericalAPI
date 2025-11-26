@@ -4,14 +4,12 @@
 
 Este proyecto busca usar de manera extensiva los objetos genéricos de C# para reducir al máximo el código. Entre ellos:
 
-* Repositoro genérico para CRUDP (Create, Read, Update, Delete, Paged)
+* Repositorio genérico para CRUDP (Create, Read, Update, Delete, Paged)
 * Servicios genéricos para CRUDP
 * Controladores genéricos
 * Pruebas genéricas de repositorios genéricos
 * Pruebas genéricas de servicios genéricos
 * Pruebas genéricas de controladores genéricos
-
-
 
 ## Estructura
 Estructura base del proyecto organizada en capas y pruebas.
@@ -23,18 +21,23 @@ GenericalAPI/
 │   ├── GenericalAPI.Application/      → Lógica de negocio (Services, DTOs, Validators)
 │   ├── GenericalAPI.Domain/           → Entidades, interfaces, reglas puras
 │   ├── GenericalAPI.Infrastructure/   → EF Core / Repositorios / Integraciones externas
-│   └── GenericalAPI.Shared/           → Utilidades, excepciones comunes, helpers
+│   ├── GenericalAPI.Shared/           → Utilidades, excepciones comunes, helpers
 ├── tests/
 │   ├── GenericalAPI.Tests.Unit/       → xUnit: Application + Domain
 │   ├── GenericalAPI.Tests.Integration/→ API + EF Core SQLite
-│   └── GenericalAPI.Tests.EndToEnd/   → Pruebas completas de API
+│   ├── GenericalAPI.Tests.EndToEnd/   → Pruebas completas de API
 ├── build/                             → Scripts CI/CD, pipelines, Sonar
-└── docs/                              → Diagramas, OpenAPI, instrucciones
+├── docs/                              → Diagramas, OpenAPI, instrucciones
 ```
 
 ## Pruebas
 - Se usarán de manera preferente objetos reales instanciados para aumentar cobertura de código y mejorar pruebas
 - Se usará InMemoryDatabase para pruebas con persistencia que no requiera capacidades avanzadas
+- Infraestructura de pruebas genéricas (ver `tests/GenericalAPI.Tests.Unit`):
+  - `TestUtils/TestDatabaseHelper`: crea contextos/fábricas EF Core usando InMemory, LocalDb o SqlCe (últimos dependen del entorno).
+  - `TestUtils/AppDbContextFixture`: `IClassFixture` para compartir fábrica de `AppDbContext` y conmutar proveedor mediante `TEST_DB_PROVIDER` (`inmemory` por defecto).
+  - `TestUtils/BaseTests/GenericRepositoryTestsBase`: base abstracta para pruebas de repos genéricos; helpers de contexto, seeding y paginación.
+  - Builders de datos (`ProductBuilder`, `StoreBuilder`) para generar entidades/DTOs de prueba y reducir duplicación.
 
 ## Pasos siguientes
 

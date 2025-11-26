@@ -1,12 +1,13 @@
 using GenericalAPI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace GenericalAPI.Tests.Unit;
+namespace GenericalAPI.Tests.Unit.TestUtils;
 
 public enum TestDatabaseProvider
 {
     InMemory,
-    LocalDb
+    LocalDb,
+    SqlCe
 }
 
 public static class TestDatabaseHelper
@@ -57,6 +58,7 @@ public static class TestDatabaseHelper
             TestDatabaseProvider.LocalDb => builder
                 .UseSqlServer(GetLocalDbConnectionString(dbName))
                 .Options,
+            TestDatabaseProvider.SqlCe => throw new NotSupportedException("SQL CE support requires adding the EF Core SQL CE provider package and configuring the connection string."),
             _ => builder
                 .UseInMemoryDatabase(dbName)
                 .Options

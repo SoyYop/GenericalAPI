@@ -5,27 +5,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GenericalAPI.Infrastructure.Repositories;
 
-public sealed class EfRepository<TEntity> : IRepository<TEntity>
+public class EfRepository<TEntity> : IRepository<TEntity>
     where TEntity : class, IAuditableEntity
 {
-    private readonly DbContext _context;
-    private readonly DbSet<TEntity> _set;
+    protected readonly DbContext Context;
+    protected readonly DbSet<TEntity> Set;
 
     public EfRepository(DbContext context)
     {
-        _context = context;
-        _set = context.Set<TEntity>();
+        Context = context;
+        Set = context.Set<TEntity>();
     }
 
     public Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default) =>
-        _set.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        Set.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
     public async Task<PagedResult<TEntity>> GetPagedAsync(PagedRequest request, CancellationToken cancellationToken = default)
     {
         var page = Math.Max(1, request.Page);
         var pageSize = Math.Clamp(request.PageSize, 1, 200);
 
-        var query = ApplyOrdering(_set.AsNoTracking(), request);
+        var query = ApplyOrdering(Set.AsNoTracking(), request);
         var total = await query.LongCountAsync(cancellationToken);
 
         var items = await query
@@ -47,37 +47,37 @@ public sealed class EfRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await _set.AddAsync(entity, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await Set.AddAsync(entity, cancellationToken);
+        await Context.SaveChangesAsync(cancellationToken);
         return entity;
     }
 
     public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        var tracked = _set.Local.FirstOrDefault(e => e.Id == entity.Id);
+        var tracked = Set.Local.FirstOrDefault(e => e.Id == entity.Id);
         if (tracked is not null && !ReferenceEquals(tracked, entity))
         {
-            _context.Entry(tracked).State = EntityState.Detached;
+            Context.Entry(tracked).State = EntityState.Detached;
         }
 
-        _set.Update(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        Set.Update(entity);
+        await Context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<bool> DeleteAsync(long id, CancellationToken cancellationToken = default)
     {
-        var entity = await _set.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        var entity = await Set.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         if (entity is null)
         {
             return false;
         }
 
-        _set.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        Set.Remove(entity);
+        await Context.SaveChangesAsync(cancellationToken);
         return true;
     }
 
-    public IQueryable<TEntity> Query() => _set.AsQueryable();
+    public IQueryable<TEntity> Query() => Set.AsQueryable();
 
     private static IQueryable<TEntity> ApplyOrdering(IQueryable<TEntity> source, PagedRequest request)
     {
