@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GenericalAPI.Shared\GenericalAPI.Shared.csproj" />
+    <ProjectReference Include="..\GenericalAPI.Domain\GenericalAPI.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Abstractions\Persistence\IAuditableEntity.cs" />
+  </ItemGroup>
+
 </Project>
