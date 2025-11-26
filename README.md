@@ -4,10 +4,13 @@
 
 Este proyecto busca usar de manera extensiva los objetos genéricos de C# para reducir al máximo el código. Entre ellos:
 
-* Repositoro genérico
-* Servicios genéricos
+* Repositoro genérico para CRUDP (Create, Read, Update, Delete, Paged)
+* Servicios genéricos para CRUDP
 * Controladores genéricos
-* Pruebas genéricas
+* Pruebas genéricas de repositorios genéricos
+* Pruebas genéricas de servicios genéricos
+* Pruebas genéricas de controladores genéricos
+
 
 
 ## Estructura
@@ -28,6 +31,12 @@ GenericalAPI/
 ├── build/                             → Scripts CI/CD, pipelines, Sonar
 └── docs/                              → Diagramas, OpenAPI, instrucciones
 ```
+
+## Pruebas
+- Se usarán de manera preferente objetos reales instanciados para aumentar cobertura de código y mejorar pruebas
+- Se usará InMemoryDatabase para pruebas con persistencia que no requiera capacidades avanzadas
+
+## Pasos siguientes
 
 Puntos siguientes sugeridos:
 - Agregar referencias entre proyectos (API → Application → Domain, etc.).

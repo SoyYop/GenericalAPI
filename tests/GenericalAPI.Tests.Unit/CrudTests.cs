@@ -1,28 +1,18 @@
-using Microsoft.EntityFrameworkCore;
 using GenericalAPI.Infrastructure.Repositories;
 using GenericalAPI.Infrastructure.Persistence;
 using GenericalAPI.Application.Abstractions.Persistence;
 using GenericalAPI.Domain.Entities;
 using GenericalAPI.Application.Services;
-using GenericalAPI.Application.Contracts.Stores;
 using GenericalAPI.Application.Mappings.Products;
 using GenericalAPI.Shared.Contracts.Pagination;
+using GenericalAPI.Tests.Unit;
 using Xunit.Abstractions;
+using GenericalAPI.Application.Contracts.Stores;
 
 namespace GenericApi.Tests;
 
-public class CrudTests()
+public class CrudTests(ITestOutputHelper output)
 {
-    private static AppDbContext CreateContext(ITestOutputHelper output)
-    {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            // Unique database name per test to avoid cross-test state.
-            .UseInMemoryDatabase($"GenericApiTests_{Guid.NewGuid()}")
-            .Options;
-
-        return new AppDbContext(options);
-    }
-
     private static (IRepository<Product> repo, ICrudService<ProductDto, Product> svc) CreateSut(AppDbContext context)
     {
         var repo = new EfRepository<Product>(context);
@@ -34,7 +24,7 @@ public class CrudTests()
     [Fact]
     public async Task Repository_Paginates_And_Orders_By_Id()
     {
-        await using var context = CreateContext();
+        await using var context = TestDatabaseHelper.CreateContext();
         var repo = new EfRepository<Product>(context);
 
         for (var i = 1; i <= 30; i++)
@@ -59,7 +49,7 @@ public class CrudTests()
     [Fact]
     public async Task CrudService_Sets_Audit_On_Create_And_Update()
     {
-        await using var context = CreateContext();
+        await using var context = TestDatabaseHelper.CreateContext();
         var (repo, service) = CreateSut(context);
 
         var newId = await service.CreateAsync(new ProductDto
