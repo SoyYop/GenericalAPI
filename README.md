@@ -1,5 +1,16 @@
-## GenericalAPI
+# GenericalAPI
 
+## Descripción
+
+Este proyecto busca usar de manera extensiva los objetos genéricos de C# para reducir al máximo el código. Entre ellos:
+
+* Repositoro genérico
+* Servicios genéricos
+* Controladores genéricos
+* Pruebas genéricas
+
+
+## Estructura
 Estructura base del proyecto organizada en capas y pruebas.
 
 ```
