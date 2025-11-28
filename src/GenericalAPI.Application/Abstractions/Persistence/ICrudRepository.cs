@@ -4,7 +4,7 @@ using GenericalAPI.Shared.Contracts.Pagination;
 namespace GenericalAPI.Application.Abstractions.Persistence;
 
 
-public interface IRepository<TEntity>
+public interface ICrudRepository<TEntity>
     where TEntity : IAuditableEntity
 {
     Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default);

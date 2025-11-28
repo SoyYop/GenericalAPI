@@ -8,11 +8,11 @@ using GenericalAPI.Infrastructure.Repositories;
 using GenericalAPI.Shared.Contracts.Pagination;
 using GenericalAPI.Tests.Unit.TestUtils.BaseTests;
 
-namespace GenericalTests;
+namespace GenericalAPI.Tests.Unit;
 
 public class StoreTests : GenericRepositoryTestsBase<Store>
 {
-    protected override IRepository<Store> CreateRepository(AppDbContext context) => new EfStoreRepository(context);
+    protected override ICrudRepository<Store> CreateRepository(AppDbContext context) => new EfStoreRepository(context);
     protected override Store CreateEntity(int seed) =>
         new StoreBuilder().WithName($"Store{seed}").Build();
 
@@ -67,7 +67,7 @@ public class StoreTests : GenericRepositoryTestsBase<Store>
     public async Task GetPagedAsync_Maps_Stores_To_Dtos()
     {
         await using var context = CreateContext();
-        var (repo, service) = CreateSut(context);
+        var (_, service) = CreateSut(context);
 
         for (var i = 1; i <= 6; i++)
         {

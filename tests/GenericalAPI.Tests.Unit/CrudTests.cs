@@ -8,15 +8,15 @@ using GenericalAPI.Infrastructure.Repositories;
 using GenericalAPI.Shared.Contracts.Pagination;
 using GenericalAPI.Tests.Unit.TestUtils.BaseTests;
 
-namespace GenericApi.Tests;
+namespace GenericApi.Tests.Unit;
 
 public class CrudTests : GenericRepositoryTestsBase<Product>
 {
-    protected override IRepository<Product> CreateRepository(AppDbContext context) => new EfRepository<Product>(context);
+    protected override ICrudRepository<Product> CreateRepository(AppDbContext context) => new EfRepository<Product>(context);
     protected override Product CreateEntity(int seed) =>
         new ProductBuilder().WithName($"P{seed}").WithPrice(seed).Build();
 
-    private (IRepository<Product> Repo, ICrudService<ProductDto, Product> Service) CreateSut(AppDbContext context)
+    private (ICrudRepository<Product> Repo, ICrudService<ProductDto, Product> Service) CreateSut(AppDbContext context)
     {
         var repo = CreateRepository(context);
         var mapper = new ProductMapper();

@@ -17,7 +17,7 @@ public abstract class GenericRepositoryTestsBase<TEntity>
     /// <summary>
     /// Crea el repositorio específico (por ejemplo, EfRepository&lt;T&gt; o derivado).
     /// </summary>
-    protected abstract IRepository<TEntity> CreateRepository(AppDbContext context);
+    protected abstract ICrudRepository<TEntity> CreateRepository(AppDbContext context);
 
     /// <summary>
     /// Crea una instancia de entidad de prueba. El seed ayuda a generar datos diferenciados.
@@ -32,7 +32,7 @@ public abstract class GenericRepositoryTestsBase<TEntity>
     protected AppDbContext CreateContext(string? dbName = null, bool unique = true) =>
         TestDatabaseHelper.CreateContext(DatabaseProvider, dbName, unique);
 
-    protected async Task<List<long>> SeedAsync(IRepository<TEntity> repository, int count, int startSeed = 1, CancellationToken ct = default)
+    protected async Task<List<long>> SeedAsync(ICrudRepository<TEntity> repository, int count, int startSeed = 1, CancellationToken ct = default)
     {
         var ids = new List<long>(count);
         for (var i = 0; i < count; i++)
@@ -47,6 +47,6 @@ public abstract class GenericRepositoryTestsBase<TEntity>
 
     protected static PagedRequest Page(int page, int size) => new() { Page = page, PageSize = size };
 
-    protected async Task<PagedResult<TEntity>> GetPagedAsync(IRepository<TEntity> repository, int page, int size, CancellationToken ct = default) =>
+    protected async Task<PagedResult<TEntity>> GetPagedAsync(ICrudRepository<TEntity> repository, int page, int size, CancellationToken ct = default) =>
         await repository.GetPagedAsync(Page(page, size), ct);
 }

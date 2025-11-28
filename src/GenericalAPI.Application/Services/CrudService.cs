@@ -8,10 +8,10 @@ namespace GenericalAPI.Application.Services;
 public sealed class CrudService<TDto, TEntity> : ICrudService<TDto, TEntity>
     where TEntity : class, IAuditableEntity, new()
 {
-    private readonly IRepository<TEntity> _repository;
+    private readonly ICrudRepository<TEntity> _repository;
     private readonly IEntityMapper<TEntity, TDto> _mapper;
 
-    public CrudService(IRepository<TEntity> repository, IEntityMapper<TEntity, TDto> mapper)
+    public CrudService(ICrudRepository<TEntity> repository, IEntityMapper<TEntity, TDto> mapper)
     {
         _repository = repository;
         _mapper = mapper;

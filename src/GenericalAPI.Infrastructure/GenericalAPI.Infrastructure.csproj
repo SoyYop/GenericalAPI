@@ -24,6 +24,6 @@
   <ItemGroup>
     <Compile Remove="Services\*.cs" />
     <Compile Remove="Repositories\IStoreRepository.cs" />
-    <Compile Remove="Persistence\IRepository.cs" />
+    <Compile Remove="Persistence\ICrudRepository.cs" />
   </ItemGroup>
 </Project>

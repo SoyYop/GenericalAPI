@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+
+    <RootNamespace>GenericalAPI.Tests</RootNamespace>
+    <AssemblyName>GenericalAPI.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

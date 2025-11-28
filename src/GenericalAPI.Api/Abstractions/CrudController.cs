@@ -3,7 +3,7 @@ using GenericalAPI.Domain.Abstractions;
 using GenericalAPI.Shared.Contracts.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GenericalAPI.Api.Controllers;
+namespace GenericalAPI.Api.Abstractions;
 
 [ApiController]
 [Route("api/[controller]")]

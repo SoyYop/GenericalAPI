@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GenericalAPI.Infrastructure.Repositories;
 
-public class EfRepository<TEntity> : IRepository<TEntity>
+public class EfRepository<TEntity> : ICrudRepository<TEntity>
     where TEntity : class, IAuditableEntity
 {
     protected readonly DbContext Context;

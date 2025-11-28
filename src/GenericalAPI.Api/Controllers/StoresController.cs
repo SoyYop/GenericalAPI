@@ -1,3 +1,4 @@
+using GenericalAPI.Api.Abstractions;
 using GenericalAPI.Application.Abstractions.Persistence;
 using GenericalAPI.Application.Contracts.Stores;
 using GenericalAPI.Domain.Entities;
